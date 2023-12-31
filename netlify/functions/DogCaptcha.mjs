@@ -3,6 +3,12 @@
 
 import { v4 as uuidv4 } from 'uuid';
 
+const headers = {
+  "Access-Control-Allow-Origin" : "*",
+  "Access-Control-Allow-Methods": "GET",
+  "Access-Control-Allow-Headers": "Content-Type"
+}
+
 const breeds = ["akita", "beagle", "dachshund", "dalmatian", "husky", "komondor", "poodle/toy", "shiba", "terrier/yorkshire"];
 const breeds_ja = ["秋田犬", "ビーグル", "ダックスフント", "ダルメシアン", "ハスキー", "コモンドール", "トイプードル", "柴犬", "ヨークシャーテリア"];
 
@@ -46,11 +52,7 @@ export default async () => {
 
   return new Response(JSON.stringify(data), {
       statusCode: 200,
-      headers: {
-      "Access-Control-Allow-Origin" : "*",
-      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE",
-      "Access-Control-Allow-Headers": "Content-Type"
-      }
+      headers: headers
     });
 };
 

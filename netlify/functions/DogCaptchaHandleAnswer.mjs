@@ -1,6 +1,12 @@
 {/* Handle POST request from client */}
 {/* http://localhost:9999/.netlify/functions/DogCaptchaHandleAnswer */}
 
+const headers = {
+    "Access-Control-Allow-Origin" : "*",
+    "Access-Control-Allow-Methods": "POST, DELETE",
+    "Access-Control-Allow-Headers": "Content-Type"
+  }  
+
 exports.handler = async function(event, context) {
 //export async function DogCaptchaHandleAnswer(event, context) {
 
@@ -10,7 +16,7 @@ exports.handler = async function(event, context) {
         data = event.body;
     } catch (error) {
         console.error("Error parsing JSON: ", error);
-        return { statusCode: 400, body: "Invalid request body" };
+        return { statusCode: 400, headers: headers, body: "Invalid request body" };
     }
 
     if (event.httpMethod === "DELETE") {
@@ -28,7 +34,7 @@ exports.handler = async function(event, context) {
         return { statusCode: 200, body: JSON.stringify({ message: "Requested API to Delete" })};
 
     } else if (event.httpMethod !== "POST") {
-        return { statusCode: 405, body: "Method Not Allowed. Only Allows POST or DELETE. Your Method Was " + event.httpMethod + "." };
+        return { statusCode: 405, headers: headers, body: "Method Not Allowed. Only Allows POST or DELETE. Your Method Was " + event.httpMethod + "." };
     }
 
     //POST
@@ -41,9 +47,9 @@ exports.handler = async function(event, context) {
     
     if (searchResult !== -1) { 
         DeleteSelectedFromDatabase(searchResult);   //delete from database
-        return { statusCode: 200, body: JSON.stringify({ passFlag: 1, message: "Data Received and CAPTCHA Passed" })};
+        return { statusCode: 200, headers: headers, body: JSON.stringify({ passFlag: 1, message: "Data Received and CAPTCHA Passed" })};
     }
-    else return { statusCode: 200, body: JSON.stringify({ passFlag: 0, message: "Data Received but CAPTCHA Failed" })};
+    else return { statusCode: 200, headers: headers, body: JSON.stringify({ passFlag: 0, message: "Data Received but CAPTCHA Failed" })};
 };
 
 async function readDatabaseJSON() {
