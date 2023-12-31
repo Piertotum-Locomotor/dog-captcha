@@ -1,8 +1,8 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
 
 import Box from '@mui/material/Box';
 import { ImageList,ImageListItem } from '@mui/material';
@@ -14,6 +14,8 @@ import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import RotateRightIcon from '@mui/icons-material/RotateRight';
 import RefreshIcon from '@mui/icons-material/Refresh';
+
+const APIURL = "";
 
 export default function DogCaptchaDialog() {
   const [open, setOpen] = useState(false);
@@ -52,7 +54,7 @@ export default function DogCaptchaDialog() {
     setAPIBusy(true);
     setPassFlag(-1);
     setSelectedImageId(-1);
-    const response = await fetch("/.netlify/functions/DogCaptcha");
+    const response = await fetch(APIURL + "/.netlify/functions/DogCaptcha");
     const data = await response.json().then(setAPIBusy(false));
     setId(data.id);
     setQuiz(data.quiz);
@@ -80,7 +82,7 @@ export default function DogCaptchaDialog() {
       setPassFlag(-1);
       setAPIBusy(true);
       const data = { id: id, quiz: quiz, ans: ans };
-      fetch('/.netlify/functions/DogCaptchaHandleAnswer', {
+      fetch(APIURL + '/.netlify/functions/DogCaptchaHandleAnswer', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: { 'Content-Type': 'application/json' },
@@ -102,7 +104,7 @@ export default function DogCaptchaDialog() {
     if (!APIBusy) {
       setAPIBusy(true);
       const data = { id: id };
-      fetch('/.netlify/functions/DogCaptchaHandleAnswer', {
+      fetch(APIURL + '/.netlify/functions/DogCaptchaHandleAnswer', {
         method: 'DELETE',
         body: JSON.stringify(data),
         headers: { 'Content-Type': 'application/json' },
@@ -124,7 +126,7 @@ export default function DogCaptchaDialog() {
       <br />
       <div style={{textAlign: "center"}}>
       {/* Dialog button */}
-      <Button variant="outlined" onClick={handleClickOpen} startIcon={passFlag === 1 ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />} endIcon={<RotateRightIcon />}>
+      <Button variant="outlined" color="inherit" onClick={handleClickOpen} startIcon={passFlag === 1 ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />} endIcon={<RotateRightIcon />}>
         <div style={{textAlign: "left"}}>私はロボットではあり<br />ません</div>
       </Button>
       </div>
@@ -201,7 +203,7 @@ export default function DogCaptchaDialog() {
         </DialogContent>
         <DialogActions>
           <div style={{color: "gray", flex: "0.975 0 0"}}>わんわんCAPTCHA </div>
-          <Button disabled={APIBusy} size="large" variant="text" onClick={handleReload}><RefreshIcon /></Button>
+          <Button disabled={APIBusy} color="inherit" size="large" variant="text" onClick={handleReload}><RefreshIcon /></Button>
           <Button disabled={APIBusy} color="primary" size="large" variant="contained" onClick={handleSubmit} autoFocus>{APIBusy ? "通信中" : "確認"}</Button>
         </DialogActions>
       </Dialog>

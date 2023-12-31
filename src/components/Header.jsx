@@ -1,19 +1,12 @@
-import { AppBar, Toolbar, makeStyles, Typography } from '@material-ui/core'
+import { AppBar, Toolbar, Typography } from '@mui/material'
 import React from 'react'
 import PetsIcon from '@mui/icons-material/Pets';
 
-const useStyles = makeStyles(() => ({
-    typographyStyles: {
-      flex: 1
-    }
-  }));
-  
   const Header = () => {
-    const classes = useStyles();
     return (
       <AppBar position="static">
         <Toolbar>
-          <Typography className={classes.typographyStyles}>
+          <Typography style={{flex: "1 0 0"}}>
             わんわんCAPTCHA デモ版 (dogCAPTCHA)
           </Typography>
           <PetsIcon />
