@@ -44,7 +44,14 @@ export default async () => {
 
   PushToDatabase(data.id, ans);
 
-  return new Response(JSON.stringify(data));
+  return new Response(JSON.stringify(data), {
+      statusCode: 200,
+      headers: {
+      "Access-Control-Allow-Origin" : "*",
+      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE",
+      "Access-Control-Allow-Headers": "Content-Type"
+      }
+    });
 };
 
   {/* POST */}
