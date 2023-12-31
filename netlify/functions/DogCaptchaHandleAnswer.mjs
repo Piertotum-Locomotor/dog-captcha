@@ -31,11 +31,12 @@ exports.handler = async function(event, context) {
 
         if (i !== -1) DeleteSelectedFromDatabase(i);
 
-        return { statusCode: 200, body: JSON.stringify({ message: "Requested API to Delete" })};
+        return { statusCode: 200, headers: headers, body: JSON.stringify({ message: "Requested API to Delete" })};
 
     } else if (event.httpMethod !== "POST") {
         return { statusCode: 405, headers: headers, body: "Method Not Allowed. Only Allows POST or DELETE. Your Method Was " + event.httpMethod + "." };
     }
+
 
     //POST
     
