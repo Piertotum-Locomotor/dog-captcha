@@ -4,7 +4,7 @@
 import { v4 as uuidv4 } from 'uuid';
 
 const headers = {
-  "Access-Control-Allow-Origin" : "https://astonishing-caramel-d77900.netlify.app/",  //Allowed URL to call API   * = All
+  "Access-Control-Allow-Origin" : "https://astonishing-caramel-d77900.netlify.app",  //Allowed URL to call API   * = All
   "Access-Control-Allow-Methods": "GET",
   "Access-Control-Allow-Headers": "Content-Type"
 }

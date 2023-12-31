@@ -2,7 +2,7 @@
 {/* http://localhost:9999/.netlify/functions/DogCaptchaHandleAnswer */}
 
 const headers = {
-    "Access-Control-Allow-Origin" : "https://astonishing-caramel-d77900.netlify.app/",  //Allowed URL to call API   * = All
+    "Access-Control-Allow-Origin" : "https://astonishing-caramel-d77900.netlify.app",  //Allowed URL to call API   * = All
     "Access-Control-Allow-Methods": "POST, DELETE",
     "Access-Control-Allow-Headers": "Content-Type"
 }  
