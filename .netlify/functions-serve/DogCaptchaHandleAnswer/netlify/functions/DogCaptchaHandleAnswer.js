@@ -3,13 +3,19 @@
 }
 {
 }
+var headers = {
+  "Access-Control-Allow-Origin": "https://astonishing-caramel-d77900.netlify.app",
+  //Allowed URL to call API   * = All
+  "Access-Control-Allow-Methods": "POST, DELETE",
+  "Access-Control-Allow-Headers": "Content-Type"
+};
 exports.handler = async function(event, context) {
   let data;
   try {
     data = event.body;
   } catch (error) {
     console.error("Error parsing JSON: ", error);
-    return { statusCode: 400, body: "Invalid request body" };
+    return { statusCode: 400, headers, body: "Invalid request body" };
   }
   if (event.httpMethod === "DELETE") {
     let database2 = await readDatabaseJSON();
@@ -22,17 +28,19 @@ exports.handler = async function(event, context) {
       i = -1;
     if (i !== -1)
       DeleteSelectedFromDatabase(i);
-    return { statusCode: 200, body: JSON.stringify({ message: "Requested API to Delete" }) };
+    return { statusCode: 200, headers, body: JSON.stringify({ message: "Requested API to Delete" }) };
+  } else if (event.httpMethod === "OPTIONS") {
+    return { statusCode: 200, headers, body: "This Was a Preflight Request" };
   } else if (event.httpMethod !== "POST") {
-    return { statusCode: 405, body: "Method Not Allowed. Only Allows POST or DELETE. Your Method Was " + event.httpMethod + "." };
+    return { statusCode: 405, headers, body: "Method Not Allowed. Only Allows POST or DELETE. Your Method Was " + event.httpMethod + "." };
   }
   let database = await readDatabaseJSON();
   let searchResult = database.indexOf(JSON.stringify({ id: JSON.parse(data).id, ans: Number(JSON.parse(data).ans) }));
   if (searchResult !== -1) {
     DeleteSelectedFromDatabase(searchResult);
-    return { statusCode: 200, body: JSON.stringify({ passFlag: 1, message: "Data Received and CAPTCHA Passed" }) };
+    return { statusCode: 200, headers, body: JSON.stringify({ passFlag: 1, message: "Data Received and CAPTCHA Passed" }) };
   } else
-    return { statusCode: 200, body: JSON.stringify({ passFlag: 0, message: "Data Received but CAPTCHA Failed" }) };
+    return { statusCode: 200, headers, body: JSON.stringify({ passFlag: 0, message: "Data Received but CAPTCHA Failed" }) };
 };
 async function readDatabaseJSON() {
   const response = await fetch("https://roaring-pegasus-3652c3.netlify.app/.netlify/functions/DogCaptchaDatabase");
