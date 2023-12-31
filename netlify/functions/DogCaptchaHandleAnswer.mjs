@@ -2,10 +2,10 @@
 {/* http://localhost:9999/.netlify/functions/DogCaptchaHandleAnswer */}
 
 const headers = {
-    "Access-Control-Allow-Origin" : "*",
+    "Access-Control-Allow-Origin" : "https://astonishing-caramel-d77900.netlify.app/",  //Allowed URL to call API   * = All
     "Access-Control-Allow-Methods": "POST, DELETE",
     "Access-Control-Allow-Headers": "Content-Type"
-  }  
+}  
 
 exports.handler = async function(event, context) {
 //export async function DogCaptchaHandleAnswer(event, context) {
@@ -34,7 +34,7 @@ exports.handler = async function(event, context) {
         return { statusCode: 200, headers: headers, body: JSON.stringify({ message: "Requested API to Delete" })};
 
     } else if (event.httpMethod === 'OPTIONS') {
-        
+
         // Preflight request
         return { statusCode: 200, headers: headers, body: 'This Was a Preflight Request' };
 
