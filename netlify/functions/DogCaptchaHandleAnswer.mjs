@@ -33,6 +33,11 @@ exports.handler = async function(event, context) {
 
         return { statusCode: 200, headers: headers, body: JSON.stringify({ message: "Requested API to Delete" })};
 
+    } else if (event.httpMethod === 'OPTIONS') {
+        
+        // Preflight request
+        return { statusCode: 200, headers: headers, body: 'This Was a Preflight Request' };
+
     } else if (event.httpMethod !== "POST") {
         return { statusCode: 405, headers: headers, body: "Method Not Allowed. Only Allows POST or DELETE. Your Method Was " + event.httpMethod + "." };
     }
