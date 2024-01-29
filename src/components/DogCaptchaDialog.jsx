@@ -132,7 +132,10 @@ export default function DogCaptchaDialog() {
       </div>
       <br />
       
-      
+      {/* Main Content */}
+      {passFlag === 1 &&
+        <Content />
+      }
       
 
       {/* Dialog */}
