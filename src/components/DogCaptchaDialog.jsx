@@ -133,9 +133,9 @@ export default function DogCaptchaDialog() {
       <br />
       
       {/* Main Content */}
-      {passFlag === 1 &&
+      {passFlag === 1 && <>
         <Content />
-      }
+      </>}
       
 
       {/* Dialog */}
