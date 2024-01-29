@@ -15,7 +15,7 @@ import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import RotateRightIcon from '@mui/icons-material/RotateRight';
 import RefreshIcon from '@mui/icons-material/Refresh';
 
-import Content from './components/Content';
+import Content from './Content';
 
 const APIURL = "";
 
