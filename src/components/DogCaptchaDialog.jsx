@@ -61,7 +61,17 @@ export default function DogCaptchaDialog() {
       method: 'POST',
       body: JSON.stringify({KEY: "VALUE"}),
       headers: { 'Content-Type': 'application/json' },
-    });
+    })
+    .then(response => {
+      setAPIBusy(false);
+      if (!response.ok) {
+        throw new Error(`${response.status} ${response.statusText}`);
+      }
+      return response.json();
+      })
+    .then(data => {console.log(data); setPassFlag(data.passFlag);})
+    .catch((error) => console.error('Error:', error));
+
     const data = await response.json().then(setAPIBusy(false));
     setId(data.id);
     setQuiz(data.quiz);
@@ -101,7 +111,7 @@ export default function DogCaptchaDialog() {
         }
         return response.json();
         })
-      .then(data => {console.log(data); setPassFlag(data.passFlag);})
+      .then(data => {console.log(data); setPassFlag(data.passFlag); if (data.passFlag === 1) handleClose()})
       .catch((error) => console.error('Error:', error));
     }
   }
