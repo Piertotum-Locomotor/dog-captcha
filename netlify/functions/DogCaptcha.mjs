@@ -38,7 +38,11 @@ async function push_slots() {
   return target_slot;
 }
 
-export default async () => {
+exports.handler = async function(event, context) {
+//export default async () => {
+  if (event.httpMethod !== "POST") {
+    return { statusCode: 405, headers: headers, body: "Method Not Allowed. Only Allows POST. Your Method Was " + event.httpMethod + "." };
+}
   let ans = await push_slots();
 
   const data = {

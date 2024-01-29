@@ -56,7 +56,11 @@ export default function DogCaptchaDialog() {
     setAPIBusy(true);
     setPassFlag(-1);
     setSelectedImageId(-1);
-    const response = await fetch(APIURL + "/.netlify/functions/DogCaptcha");
+    const response = await fetch(APIURL + "/.netlify/functions/DogCaptcha", {
+      method: 'POST',
+      body: NULL,
+      headers: { 'Content-Type': 'application/json' },
+    });
     const data = await response.json().then(setAPIBusy(false));
     setId(data.id);
     setQuiz(data.quiz);
