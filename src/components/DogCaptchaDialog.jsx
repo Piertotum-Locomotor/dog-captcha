@@ -62,6 +62,7 @@ export default function DogCaptchaDialog() {
       body: JSON.stringify({KEY: "VALUE"}),
       headers: { 'Content-Type': 'application/json' },
     })
+    /*
     .then(response => {
       if (!response.ok) {
         throw new Error(`${response.status} ${response.statusText}`);
@@ -69,7 +70,8 @@ export default function DogCaptchaDialog() {
       return response.json();
       })
     .then(data => {console.log(data);})
-    .catch((error) => console.error('Error:', error));
+    .catch((error) => console.error('Error:', error))
+    */;
 
     const data = await response.json().then(setAPIBusy(false));
     setId(data.id);
