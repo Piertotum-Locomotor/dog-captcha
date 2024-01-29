@@ -63,13 +63,12 @@ export default function DogCaptchaDialog() {
       headers: { 'Content-Type': 'application/json' },
     })
     .then(response => {
-      setAPIBusy(false);
       if (!response.ok) {
         throw new Error(`${response.status} ${response.statusText}`);
       }
       return response.json();
       })
-    .then(data => {console.log(data); setPassFlag(data.passFlag);})
+    .then(data => {console.log(data);})
     .catch((error) => console.error('Error:', error));
 
     const data = await response.json().then(setAPIBusy(false));
