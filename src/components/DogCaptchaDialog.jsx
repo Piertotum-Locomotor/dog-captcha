@@ -15,6 +15,8 @@ import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import RotateRightIcon from '@mui/icons-material/RotateRight';
 import RefreshIcon from '@mui/icons-material/Refresh';
 
+import Content from './components/Content';
+
 const APIURL = "";
 
 export default function DogCaptchaDialog() {
