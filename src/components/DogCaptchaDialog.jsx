@@ -114,7 +114,7 @@ export default function DogCaptchaDialog() {
         })
       .then(data => {console.log(data); setPassFlag(data.passFlag);})
       .catch((error) => console.error('Error:', error))
-      .then(() => {if (passFlag === 1) handleClose()});
+      .then(() => {if (passFlag === 1) () => {handleClose}});
     }
   }
 
