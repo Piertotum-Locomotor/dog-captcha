@@ -86,6 +86,7 @@ var target_slot;
 var target_index;
 var slots;
 async function push_slots() {
+  console.log("DOG");
   targets_count = Math.floor(Math.random() * 4 + 1);
   {
   }

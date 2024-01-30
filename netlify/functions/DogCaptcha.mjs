@@ -18,6 +18,9 @@ let target_index;   //answer breed
 let slots;          //all slots data
 
 async function push_slots() {
+
+  console.log("DOG");
+
   targets_count = Math.floor( Math.random() * 4 + 1 );  {/* target answer slot: 1-4 */}
   target_slot = []
   for (let i = 0; i < targets_count; i++) {
