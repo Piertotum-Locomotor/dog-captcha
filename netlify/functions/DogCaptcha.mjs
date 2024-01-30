@@ -51,7 +51,10 @@ async function push_slots() {
 
 exports.handler = async function(event, context) {
 //export default async () => {
-  if (event.httpMethod !== "POST") {
+  if (event.httpMethod === 'OPTIONS') {
+    // Preflight request
+    return { statusCode: 200, headers: headers, body: 'This Was a Preflight Request' };
+  } else if (event.httpMethod !== "POST") {
     return { statusCode: 405, headers: headers, body: "Method Not Allowed. Only Allows POST. Your Method Was " + event.httpMethod + "." };
   }
   slots = [];
