@@ -54,11 +54,11 @@ export default function DogCaptchaDialog() {
     setPassFlag(-1);
     setAns([]);
 
-    await fetch(APIURL + "/.netlify/functions/DogCaptcha", {
+    await fetch(APIURL + "/.netlify/functions/DogCaptcha"/*, {
       method: 'GET',
       body: JSON.stringify({KEY: "VALUE"}),
       headers: { 'Content-Type': 'application/json' },
-    })
+    }*/)
     .then(response => {
       if (!response.ok) {
         throw new Error(`${response.status} ${response.statusText}`);
