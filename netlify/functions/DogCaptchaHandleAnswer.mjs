@@ -50,7 +50,7 @@ exports.handler = async function(event, context) {
 
     //Search Answer from Database JSON
     ansArray = JSON.parse(data).ans.map(Number);
-    ansArray.sort((x, y) => {return x-y}); //sorting in acsending order
+    ansArray.sort((x, y) => {return x-y}); //sorting in ascending order
     let searchResult = database.indexOf( JSON.stringify({id: JSON.parse(data).id, ans: ansArray}) );
 
     if (searchResult !== -1) { 

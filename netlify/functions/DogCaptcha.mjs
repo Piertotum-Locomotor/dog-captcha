@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 const headers = {
   "Access-Control-Allow-Origin" : "https://astonishing-caramel-d77900.netlify.app",  //Allowed URL to call API   * = All
-  "Access-Control-Allow-Methods": "GET",
+  "Access-Control-Allow-Methods": "POST",
   "Access-Control-Allow-Headers": "Content-Type"
 }
 
@@ -27,7 +27,7 @@ async function push_slots() {
     } while (target_slot.includes(challenge));
     target_slot[i] = challenge;
   }
-  target_slot.sort((x, y) => {return x-y}); //sorting in acsending order
+  target_slot.sort((x, y) => {return x-y}); //sorting in ascending order
 
   target_index = Math.floor(Math.random() * breeds.length); {/* target breed index */}
   slots = [];
