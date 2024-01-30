@@ -49,8 +49,16 @@ exports.handler = async function(event, context) {
     let database = await readDatabaseJSON();
 
     //Search Answer from Database JSON
-    let searchResult = database.indexOf( JSON.stringify({id: JSON.parse(data).id, ans: Number(JSON.parse(data).ans)}) );
+
+    //let searchResult = database.indexOf( JSON.stringify({id: JSON.parse(data).id, ans: Number(JSON.parse(data).ans)}) );
     
+    ////
+    const ans = []
+    ans[0] = JSON.parse(data).ans;
+    console.log(ans.map(Number));
+    let searchResult = database.indexOf( JSON.stringify({id: JSON.parse(data).id, ans: ans.map(Number)}) );
+    ////
+
     if (searchResult !== -1) { 
         DeleteSelectedFromDatabase(searchResult);   //delete from database
         return { statusCode: 200, headers: headers, body: JSON.stringify({ passFlag: 1, message: "Data Received and CAPTCHA Passed" })};

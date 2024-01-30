@@ -85,7 +85,8 @@ var target_slot;
 var target_index;
 var slots;
 async function push_slots() {
-  target_slot = Math.floor(Math.random() * 9);
+  target_slot = [];
+  target_slot[0] = Math.floor(Math.random() * 9);
   {
   }
   target_index = Math.floor(Math.random() * breeds.length);

@@ -17,7 +17,8 @@ let target_index;
 let slots;
 
 async function push_slots() {
-  target_slot = Math.floor( Math.random() * 9 ); {/* target answer slot: 0-8 */}
+  target_slot=[]
+  target_slot[0] = Math.floor( Math.random() * 9 ); {/* target answer slot: 0-8 */}
   target_index = Math.floor(Math.random() * breeds.length); {/* target breed index */}
   slots=[];
 

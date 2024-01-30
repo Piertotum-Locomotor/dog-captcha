@@ -40,7 +40,7 @@ export default function DogCaptchaDialog() {
   const [quiz, setQuiz] = useState("");
   const [quizJa, setQuizJa] = useState("");
   const [message, setMessage] = useState([]);
-  const [ans, setAns] = useState("");
+  const [ans, setAns] = useState([]);
   const [APIBusy, setAPIBusy] = useState(false);
   const [passFlag, setPassFlag] = useState(-1); //0: Failed, 1: Passed, -1: Initialized
   useEffect (() => {
