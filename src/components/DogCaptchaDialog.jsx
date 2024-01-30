@@ -178,15 +178,6 @@ export default function DogCaptchaDialog() {
             </p>
           </Box>
             
-          {/*<RadioGroup
-            value={selectedImageId}
-            onChange={(event) => {
-              setSelectedImageId(event.target.value);
-              setAns(event.target.value);
-              console.log(ans);
-            }}
-            sx={{height: 1}}
-          >*/}
             {/* Standard image list */}
             <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
               {dataArr.map((jsondata, i) => (
@@ -224,7 +215,6 @@ export default function DogCaptchaDialog() {
               ))
               }
             </ImageList>
-          {/*</RadioGroup>*/}
 
           <p style={{color: "red"}}> {passFlag === 0 && "もう一度お試しください"} </p>
           {/*{id} | {quiz} | {quizJa} | {message}*/}
