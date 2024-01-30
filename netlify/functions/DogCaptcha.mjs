@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 const headers = {
   "Access-Control-Allow-Origin" : "https://astonishing-caramel-d77900.netlify.app",  //Allowed URL to call API   * = All
-  "Access-Control-Allow-Methods": "POST, GET",
+  "Access-Control-Allow-Methods": "POST",
   "Access-Control-Allow-Headers": "Content-Type"
 }
 
@@ -55,9 +55,9 @@ exports.handler = async function(event, context) {
   if (event.httpMethod === 'OPTIONS') {
     // Preflight request
     return { statusCode: 200, headers: headers, body: 'This Was a Preflight Request' };
-  } //else if (event.httpMethod !== "POST") {
-    //return { statusCode: 405, headers: headers, body: "Method Not Allowed. Only Allows POST. Your Method Was " + event.httpMethod + "." };
-  //}
+  } else if (event.httpMethod !== "POST") {
+    return { statusCode: 405, headers: headers, body: "Method Not Allowed. Only Allows POST. Your Method Was " + event.httpMethod + "." };
+  }
   slots = [];
   let ans = [];
   ans = await push_slots();
@@ -69,15 +69,15 @@ exports.handler = async function(event, context) {
     message: slots
   };
 
-  PushToDatabase(data.id, ans);
+  await PushToDatabase(data.id, ans);
 
   return { statusCode: 200, headers: headers, body: JSON.stringify(data) };
 };
 
   {/* POST */}
-  function PushToDatabase(id, ans) {
+  async function PushToDatabase(id, ans) {
     const data = { id: id, ans: ans };
-    fetch('https://roaring-pegasus-3652c3.netlify.app/.netlify/functions/DogCaptchaDatabase', {
+    await fetch('https://roaring-pegasus-3652c3.netlify.app/.netlify/functions/DogCaptchaDatabase', {
     //fetch('http://localhost:9999/.netlify/functions/DogCaptchaDatabase', {
       method: 'POST',
       body: JSON.stringify(data),

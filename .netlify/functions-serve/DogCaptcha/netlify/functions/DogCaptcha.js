@@ -76,7 +76,7 @@ var v4_default = v4;
 var headers = {
   "Access-Control-Allow-Origin": "https://astonishing-caramel-d77900.netlify.app",
   //Allowed URL to call API   * = All
-  "Access-Control-Allow-Methods": "POST, GET",
+  "Access-Control-Allow-Methods": "POST",
   "Access-Control-Allow-Headers": "Content-Type"
 };
 var breeds = ["akita", "beagle", "dachshund", "dalmatian", "husky", "komondor", "poodle/toy", "shiba", "terrier/yorkshire"];
@@ -124,6 +124,8 @@ async function push_slots() {
 exports.handler = async function(event, context) {
   if (event.httpMethod === "OPTIONS") {
     return { statusCode: 200, headers, body: "This Was a Preflight Request" };
+  } else if (event.httpMethod !== "POST") {
+    return { statusCode: 405, headers, body: "Method Not Allowed. Only Allows POST. Your Method Was " + event.httpMethod + "." };
   }
   slots = [];
   let ans = [];
@@ -134,14 +136,14 @@ exports.handler = async function(event, context) {
     quiz_ja: breeds_ja[target_index],
     message: slots
   };
-  PushToDatabase(data.id, ans);
+  await PushToDatabase(data.id, ans);
   return { statusCode: 200, headers, body: JSON.stringify(data) };
 };
 {
 }
-function PushToDatabase(id, ans) {
+async function PushToDatabase(id, ans) {
   const data = { id, ans };
-  fetch("https://roaring-pegasus-3652c3.netlify.app/.netlify/functions/DogCaptchaDatabase", {
+  await fetch("https://roaring-pegasus-3652c3.netlify.app/.netlify/functions/DogCaptchaDatabase", {
     //fetch('http://localhost:9999/.netlify/functions/DogCaptchaDatabase', {
     method: "POST",
     body: JSON.stringify(data),
