@@ -11,6 +11,7 @@ exports.handler = async function(event, context) {
         return { statusCode: 200, body: JSON.stringify(databaseJSON)};
     } else if (event.httpMethod === "POST") {
         //EDIT DATABASE
+        console.log("Recieved POST request to add to database");
 
         let data;
         try {
@@ -23,6 +24,8 @@ exports.handler = async function(event, context) {
         const { id: id, ans: ans } = data;
         let JSONCount = databaseJSON.push(data); //Push to JSON
         if (100 <= JSONCount) {databaseJSON = []; databaseJSON.push(data);}
+
+        console.log("Done");
 
         return { statusCode: 200, body: JSON.stringify({ message: "Successfully Pushed" })};
     } else if (event.httpMethod === "DELETE") {

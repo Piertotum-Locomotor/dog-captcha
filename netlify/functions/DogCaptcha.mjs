@@ -75,6 +75,7 @@ exports.handler = async function(event, context) {
 
   {/* POST */}
   function PushToDatabase(id, ans) {
+    console.log("POST Request to add to database");
     const data = { id: id, ans: ans };
     fetch('https://roaring-pegasus-3652c3.netlify.app/.netlify/functions/DogCaptchaDatabase', {
     //fetch('http://localhost:9999/.netlify/functions/DogCaptchaDatabase', {

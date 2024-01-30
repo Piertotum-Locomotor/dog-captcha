@@ -8,6 +8,7 @@ exports.handler = async function(event, context) {
   if (event.httpMethod === "GET") {
     return { statusCode: 200, body: JSON.stringify(databaseJSON) };
   } else if (event.httpMethod === "POST") {
+    console.log("Recieved POST request to add to database");
     let data;
     try {
       data = event.body;
@@ -21,6 +22,7 @@ exports.handler = async function(event, context) {
       databaseJSON = [];
       databaseJSON.push(data);
     }
+    console.log("Done");
     return { statusCode: 200, body: JSON.stringify({ message: "Successfully Pushed" }) };
   } else if (event.httpMethod === "DELETE") {
     let data;
