@@ -53,10 +53,8 @@ exports.handler = async function(event, context) {
     //let searchResult = database.indexOf( JSON.stringify({id: JSON.parse(data).id, ans: Number(JSON.parse(data).ans)}) );
     
     ////
-    const ans = []
-    ans[0] = JSON.parse(data).ans;
-    console.log(ans.map(Number));
-    let searchResult = database.indexOf( JSON.stringify({id: JSON.parse(data).id, ans: ans.map(Number)}) );
+    console.log(JSON.parse(data).ans.map(Number));
+    let searchResult = database.indexOf( JSON.stringify({id: JSON.parse(data).id, ans: JSON.parse(data).ans.map(Number)}) );
     ////
 
     if (searchResult !== -1) { 

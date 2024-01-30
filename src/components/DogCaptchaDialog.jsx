@@ -7,8 +7,7 @@ import DialogContent from '@mui/material/DialogContent';
 import Box from '@mui/material/Box';
 import { ImageList,ImageListItem } from '@mui/material';
 import { useEffect,useState } from "react";
-import Radio from '@mui/material/Radio'
-import RadioGroup from '@mui/material/RadioGroup'
+import Checkbox from '@mui/material/Checkbox';
 
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
@@ -32,7 +31,10 @@ export default function DogCaptchaDialog() {
   };
 
   {/* For radio button */}
-  const [selectedImageId, setSelectedImageId] = React.useState([]);
+  const [selectedImageId, setSelectedImageId] = useState([]);
+  
+  {/* For check box */}
+  const [checkedValues, setCheckedValues] = useState([]);
 
   const [dataArr, setDataArr] = useState([]);
 
@@ -57,6 +59,7 @@ export default function DogCaptchaDialog() {
     setAPIBusy(true);
     setPassFlag(-1);
     setSelectedImageId(-1);
+    setCheckedValues([]);
 
     await fetch(APIURL + "/.netlify/functions/DogCaptcha", {
       method: 'POST',
@@ -83,8 +86,6 @@ export default function DogCaptchaDialog() {
   useEffect (() => {
     setDataArr(message.map((message_list) => ({ message_list })));{/* dataListを配列にする */}
   },[message, setMessage]);
-
-
 
   const handleReload = async () => {
     if (!APIBusy) {
@@ -184,18 +185,19 @@ export default function DogCaptchaDialog() {
             </p>
           </Box>
             
-          <RadioGroup
+          {/*<RadioGroup
             value={selectedImageId}
             onChange={(event) => {
               setSelectedImageId(event.target.value);
               setAns(event.target.value);
+              console.log(ans);
             }}
             sx={{height: 1}}
-          >
+          >*/}
             {/* Standard image list */}
             <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
               {dataArr.map((jsondata, i) => (
-                <Radio
+                <Checkbox
                 key={i}
                 value={i}
                 icon={
@@ -214,12 +216,22 @@ export default function DogCaptchaDialog() {
                     />
                   </ImageListItem>
                 }
+                onChange={(event) => {
+                  if (ans.includes(event.target.value)) {
+                    setAns(
+                      ans.filter((ans) => ans !== event.target.value)
+                    );
+                  } else {
+                    setAns([...ans, event.target.value]);
+                  }
+                }}
+                checked={ans.includes(String(i))}
                 sx={{margin: 0, padding: 0, border: 0}}
-                />                
+                />
               ))
               }
             </ImageList>
-          </RadioGroup>
+          {/*</RadioGroup>*/}
 
           <p style={{color: "red"}}> {passFlag === 0 && "もう一度お試しください"} </p>
           {/*{id} | {quiz} | {quizJa} | {message}*/}

@@ -35,10 +35,8 @@ exports.handler = async function(event, context) {
     return { statusCode: 405, headers, body: "Method Not Allowed. Only Allows POST or DELETE. Your Method Was " + event.httpMethod + "." };
   }
   let database = await readDatabaseJSON();
-  const ans = [];
-  ans[0] = JSON.parse(data).ans;
-  console.log(ans.map(Number));
-  let searchResult = database.indexOf(JSON.stringify({ id: JSON.parse(data).id, ans: ans.map(Number) }));
+  console.log(JSON.parse(data).ans.map(Number));
+  let searchResult = database.indexOf(JSON.stringify({ id: JSON.parse(data).id, ans: JSON.parse(data).ans.map(Number) }));
   if (searchResult !== -1) {
     DeleteSelectedFromDatabase(searchResult);
     return { statusCode: 200, headers, body: JSON.stringify({ passFlag: 1, message: "Data Received and CAPTCHA Passed" }) };
