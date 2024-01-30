@@ -55,7 +55,7 @@ export default function DogCaptchaDialog() {
     setAns([]);
 
     await fetch(APIURL + "/.netlify/functions/DogCaptcha", {
-      method: 'POST',
+      method: 'GET',
       body: JSON.stringify({KEY: "VALUE"}),
       headers: { 'Content-Type': 'application/json' },
     })
