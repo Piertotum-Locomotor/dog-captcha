@@ -43,6 +43,7 @@ exports.handler = async function(event, context) {
   if (event.httpMethod !== "POST") {
     return { statusCode: 405, headers: headers, body: "Method Not Allowed. Only Allows POST. Your Method Was " + event.httpMethod + "." };
   }
+  slots=[];
   let ans = await push_slots();
 
   const data = {
@@ -54,12 +55,6 @@ exports.handler = async function(event, context) {
 
   PushToDatabase(data.id, ans);
 
-  /*
-  return new Response(JSON.stringify(data), {
-      statusCode: 200,
-      headers: headers
-  });
-    */
   return { statusCode: 200, headers: headers, body: JSON.stringify(data) };
 };
 

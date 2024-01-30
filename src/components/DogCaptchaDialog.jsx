@@ -26,9 +26,9 @@ export default function DogCaptchaDialog() {
     setOpen(true);
   };
  
-  const handleClose = () => {
+  const handleClose = (forceNotToReload) => {
     setOpen(false);
-    if (passFlag !== 1) handleReload();
+    if (passFlag !== 1 && !forceNotToReload) handleReload();
   };
 
   {/* For radio button */}
@@ -57,27 +57,27 @@ export default function DogCaptchaDialog() {
     setAPIBusy(true);
     setPassFlag(-1);
     setSelectedImageId(-1);
-    const response = await fetch(APIURL + "/.netlify/functions/DogCaptcha", {
+
+    await fetch(APIURL + "/.netlify/functions/DogCaptcha", {
       method: 'POST',
       body: JSON.stringify({KEY: "VALUE"}),
       headers: { 'Content-Type': 'application/json' },
     })
-    /*
     .then(response => {
       if (!response.ok) {
         throw new Error(`${response.status} ${response.statusText}`);
       }
       return response.json();
-      })
-    .then(data => {console.log(data);})
-    .catch((error) => console.error('Error:', error))
-    */;
-
-    const data = await response.json().then(setAPIBusy(false));
-    setId(data.id);
-    setQuiz(data.quiz);
-    setQuizJa(data.quiz_ja);
-    setMessage(data.message);
+    })
+    .then(data => {
+      setAPIBusy(false);
+      setId(data.id);
+      setQuiz(data.quiz);
+      setQuizJa(data.quiz_ja);
+      setMessage(data.message);
+      return data;
+    })
+    .catch((error) => console.error('Error:', error));
   }
 
   useEffect (() => {
@@ -96,7 +96,7 @@ export default function DogCaptchaDialog() {
   {/* POST */}
   const handleSubmit = () => {
     if (!APIBusy) {
-      if (passFlag === 1) {handleClose(); return;}
+      if (passFlag === 1) {handleClose(false); return;}
       setPassFlag(-1);
       setAPIBusy(true);
       const data = { id: id, quiz: quiz, ans: ans };
@@ -112,12 +112,14 @@ export default function DogCaptchaDialog() {
         }
         return response.json();
         })
-      .then(data => {console.log(data); setPassFlag(data.passFlag);})
+      .then(data => {
+        console.log(data);
+        setPassFlag(data.passFlag);
+        if (data.passFlag === 1) {
+          handleClose(true);  //passFlagが1に更新されていないので、再読み込み禁止
+        }
+      })
       .catch((error) => console.error('Error:', error));
-      
-      if (passFlag === 1) {
-        handleClose();
-      }
     }
   }
 
@@ -163,7 +165,7 @@ export default function DogCaptchaDialog() {
       {/* Dialog */}
       <Dialog
         open={open}
-        onClose={handleClose}
+        onClose={() => handleClose(false)}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >  
