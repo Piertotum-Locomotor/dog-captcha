@@ -81,28 +81,41 @@ var headers = {
 };
 var breeds = ["akita", "beagle", "dachshund", "dalmatian", "husky", "komondor", "poodle/toy", "shiba", "terrier/yorkshire"];
 var breeds_ja = ["\u79CB\u7530\u72AC", "\u30D3\u30FC\u30B0\u30EB", "\u30C0\u30C3\u30AF\u30B9\u30D5\u30F3\u30C8", "\u30C0\u30EB\u30E1\u30B7\u30A2\u30F3", "\u30CF\u30B9\u30AD\u30FC", "\u30B3\u30E2\u30F3\u30C9\u30FC\u30EB", "\u30C8\u30A4\u30D7\u30FC\u30C9\u30EB", "\u67F4\u72AC", "\u30E8\u30FC\u30AF\u30B7\u30E3\u30FC\u30C6\u30EA\u30A2"];
+var targets_count;
 var target_slot;
 var target_index;
 var slots;
 async function push_slots() {
-  target_slot = [];
-  target_slot[0] = Math.floor(Math.random() * 9);
+  targets_count = Math.floor(Math.random() * 4 + 1);
   {
   }
+  target_slot = [];
+  for (let i = 0; i < targets_count; i++) {
+    let challenge;
+    do {
+      challenge = Math.floor(Math.random() * 9);
+      {
+      }
+    } while (target_slot.includes(challenge));
+    target_slot[i] = challenge;
+  }
+  target_slot.sort((x, y) => {
+    return x - y;
+  });
   target_index = Math.floor(Math.random() * breeds.length);
   {
   }
   slots = [];
   for (let i = 0; i < 9; i++) {
-    let ret;
+    let incorrect_index;
     do {
-      ret = Math.floor(Math.random() * breeds.length);
-    } while (ret == target_index);
+      incorrect_index = Math.floor(Math.random() * breeds.length);
+    } while (incorrect_index == target_index);
     let response;
-    if (i == target_slot)
+    if (target_slot.includes(i))
       response = await fetch("https://dog.ceo/api/breed/" + breeds[target_index] + "/images/random");
     else
-      response = await fetch("https://dog.ceo/api/breed/" + breeds[ret] + "/images/random");
+      response = await fetch("https://dog.ceo/api/breed/" + breeds[incorrect_index] + "/images/random");
     let data = await response.json();
     slots.push(data.message);
   }
@@ -113,7 +126,8 @@ exports.handler = async function(event, context) {
     return { statusCode: 405, headers, body: "Method Not Allowed. Only Allows POST. Your Method Was " + event.httpMethod + "." };
   }
   slots = [];
-  let ans = await push_slots();
+  let ans = [];
+  ans = await push_slots();
   const data = {
     id: v4_default(),
     quiz: breeds[target_index],

@@ -49,13 +49,9 @@ exports.handler = async function(event, context) {
     let database = await readDatabaseJSON();
 
     //Search Answer from Database JSON
-
-    //let searchResult = database.indexOf( JSON.stringify({id: JSON.parse(data).id, ans: Number(JSON.parse(data).ans)}) );
-    
-    ////
-    console.log(JSON.parse(data).ans.map(Number));
-    let searchResult = database.indexOf( JSON.stringify({id: JSON.parse(data).id, ans: JSON.parse(data).ans.map(Number)}) );
-    ////
+    ansArray = JSON.parse(data).ans.map(Number);
+    ansArray.sort((x, y) => {return x-y}); //sorting in acsending order
+    let searchResult = database.indexOf( JSON.stringify({id: JSON.parse(data).id, ans: ansArray}) );
 
     if (searchResult !== -1) { 
         DeleteSelectedFromDatabase(searchResult);   //delete from database

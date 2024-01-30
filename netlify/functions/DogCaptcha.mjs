@@ -12,25 +12,35 @@ const headers = {
 const breeds = ["akita", "beagle", "dachshund", "dalmatian", "husky", "komondor", "poodle/toy", "shiba", "terrier/yorkshire"];
 const breeds_ja = ["秋田犬", "ビーグル", "ダックスフント", "ダルメシアン", "ハスキー", "コモンドール", "トイプードル", "柴犬", "ヨークシャーテリア"];
 
-let target_slot;
-let target_index;
-let slots;
+let targets_count;  //number of answers
+let target_slot;    //answer slots
+let target_index;   //answer breed
+let slots;          //all slots data
 
 async function push_slots() {
-  target_slot=[]
-  target_slot[0] = Math.floor( Math.random() * 9 ); {/* target answer slot: 0-8 */}
+  targets_count = Math.floor( Math.random() * 4 + 1 );  {/* target answer slot: 1-4 */}
+  target_slot = []
+  for (let i = 0; i < targets_count; i++) {
+    let challenge;
+    do {
+      challenge = Math.floor( Math.random() * 9 ); {/* target answer slot: 0-8 */}
+    } while (target_slot.includes(challenge));
+    target_slot[i] = challenge;
+  }
+  target_slot.sort((x, y) => {return x-y}); //sorting in acsending order
+
   target_index = Math.floor(Math.random() * breeds.length); {/* target breed index */}
-  slots=[];
+  slots = [];
 
   for (let i = 0; i < 9; i++) {
-    let ret;
+    let incorrect_index;
     do {
-      ret = Math.floor(Math.random() * breeds.length);
-    } while (ret == target_index);
+      incorrect_index = Math.floor(Math.random() * breeds.length);
+    } while (incorrect_index == target_index);
 
     let response;
-    if (i == target_slot) response = await fetch("https://dog.ceo/api/breed/" + breeds[target_index] + "/images/random");
-    else response = await fetch("https://dog.ceo/api/breed/" + breeds[ret] + "/images/random");
+    if (target_slot.includes(i)) response = await fetch("https://dog.ceo/api/breed/" + breeds[target_index] + "/images/random");  //answer breed's image
+    else response = await fetch("https://dog.ceo/api/breed/" + breeds[incorrect_index] + "/images/random");                       //incorrect breed's image
 
     let data = await response.json();
     slots.push(data.message);
@@ -44,8 +54,9 @@ exports.handler = async function(event, context) {
   if (event.httpMethod !== "POST") {
     return { statusCode: 405, headers: headers, body: "Method Not Allowed. Only Allows POST. Your Method Was " + event.httpMethod + "." };
   }
-  slots=[];
-  let ans = await push_slots();
+  slots = [];
+  let ans = [];
+  ans = await push_slots();
 
   const data = {
     id: uuidv4(),
