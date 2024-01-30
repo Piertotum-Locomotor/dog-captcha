@@ -30,12 +30,6 @@ export default function DogCaptchaDialog() {
     if (passFlag !== 1 && !forceNotToReload) handleReload();
   };
 
-  {/* For radio button */}
-  const [selectedImageId, setSelectedImageId] = useState([]);
-  
-  {/* For check box */}
-  const [checkedValues, setCheckedValues] = useState([]);
-
   const [dataArr, setDataArr] = useState([]);
 
   const [id, setId] = useState("");
@@ -58,8 +52,7 @@ export default function DogCaptchaDialog() {
     setMessage([]);
     setAPIBusy(true);
     setPassFlag(-1);
-    setSelectedImageId(-1);
-    setCheckedValues([]);
+    setAns([]);
 
     await fetch(APIURL + "/.netlify/functions/DogCaptcha", {
       method: 'POST',
