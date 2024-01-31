@@ -1,3 +1,12 @@
+function Content() {
+  return (
+    <div style={{textAlign: "center"}}>メインコンテンツ</div>
+  )
+}
+
+export default Content
+
+/*
 import { Grid } from '@mui/material'
 import React from 'react'
 import BodyCard from './BodyCard'
@@ -137,3 +146,4 @@ function Content() {
 }
 
 export default Content
+*/
