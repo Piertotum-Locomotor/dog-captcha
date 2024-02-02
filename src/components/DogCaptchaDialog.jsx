@@ -151,6 +151,7 @@ export default function DogCaptchaDialog() {
       <br />
       
       {/* Main Content */}
+      <Button style={{textAlign: "center"}} disabled={passFlag !== 1} color="primary" size="large" variant="contained" onClick={() => alert("ダミー")}>送信(ダミー)</Button>
       {passFlag === 1 && <>
         <Content />
       </>}
